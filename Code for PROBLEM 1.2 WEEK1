@@ -1,0 +1,16 @@
+
+import random
+
+total_sum = 0
+
+def get_number():
+  global total_sum  
+  random_number = random.randint(0, 2**31)
+  print(f"Generated number: {random_number}")
+  total_sum += random_number
+  print(f"Running sum: {total_sum}")
+
+num_calls = int(input("Enter the number of times to call get_number(): "))
+
+for _ in range(num_calls):
+  get_number()
