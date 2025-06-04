@@ -1,0 +1,32 @@
+from google.colab import drive
+import os
+
+drive.mount('/content/drive')
+
+directory_path = '/content/drive/MyDrive/PROBLEM1WEEK1'
+
+total_sum = 0
+total_count = 0
+
+if not os.path.isdir(directory_path):
+    print(f"Error: Directory not found at {directory_path}")
+else:
+    for filename in os.listdir(directory_path):
+        if filename.endswith(".txt"):
+            filepath = os.path.join(directory_path, filename)
+            try:
+                with open(filepath, 'r') as f:
+                    for line in f:
+                        numbers_str = line.split()
+                        for num_str in numbers_str:
+                            try:
+                                number = int(num_str)
+                                total_sum += number
+                                total_count += 1
+                            except ValueError:
+                                print(f"Warning: Skipping non-integer found in {filename}: {num_str}")
+            except Exception as e:
+                print(f"Error processing file {filename}: {e}")
+
+print(f"Sum: {total_sum}")
+print(f"Count: {total_count}")
