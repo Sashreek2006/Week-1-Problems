@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <limits.h>
+
+int main() {
+    int num, buffer[5];
+    long long sum = 0;
+    int count = 0, max = INT_MIN, min = INT_MAX;
+
+    while (1) {
+        time_t now = time(NULL);
+        char datafile[50];
+        sprintf(datafile, "%ld.csv", now);
+
+        FILE *df = fopen(datafile, "w");
+        FILE *sf = fopen("statistics.txt", "a");
+
+        if (!df || !sf) {
+            perror("File error");
+            return 1;
+        }
+
+        for (int i = 0; i < 5 && scanf("%d", &num) == 1; i++) {
+            buffer[i] = num;
+            fprintf(df, "%d\n", num);
+
+            sum += num;
+            count++;
+            if (num > max) max = num;
+            if (num < min) min = num;
+        }
+
+        fprintf(sf, "Time: %ld | Count: %d | Sum: %lld | Max: %d | Min: %d\n",
+                now, count, sum, max, min);
+
+        fclose(df);
+        fclose(sf);
+    }
+
+    return 0;
+}
